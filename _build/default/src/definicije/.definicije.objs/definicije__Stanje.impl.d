@@ -1,0 +1,1 @@
+src/definicije/stanje.ml:
