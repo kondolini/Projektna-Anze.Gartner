@@ -1,60 +1,79 @@
-type stanje = Stanje.t
+type stanje = int
+type simbol = char
+type premik = L | R
 
-type t = {
-  stanja : stanje list;
+type pravilo = stanje * simbol * simbol * stanje * premik
+
+type trak = simbol list * simbol * simbol list
+
+type turingov_stroj = {
+  pravila : pravilo list;
   zacetno_stanje : stanje;
-  sprejemna_stanja : stanje list;
-  prehodi : (stanje * char * stanje) list;
+  prazna : simbol;
+  koncna_stanja : stanje list;
 }
 
-let prazen_avtomat zacetno_stanje =
-  {
-    stanja = [ zacetno_stanje ];
-    zacetno_stanje;
-    sprejemna_stanja = [];
-    prehodi = [];
-  }
+let rec najdi_pravilo pravila stanje simbol =
+  match pravila with
+  | [] -> None
+  | (s, sim, sim', s', premik) :: ostalo ->
+      if s = stanje && sim = simbol then
+        Some (sim', s', premik)
+      else
+        najdi_pravilo ostalo stanje simbol
 
-let dodaj_nesprejemno_stanje stanje avtomat =
-  { avtomat with stanja = stanje :: avtomat.stanja }
+let rec izvedi_pravilo stroj trak stanje =
+  match trak with
+  | (levo, sim, desno) ->
+      match najdi_pravilo stroj.pravila stanje sim with
+      | None -> (levo, sim, desno)
+      | Some (sim', stanje', premik) ->
+          match premik with
+          | L ->
+              (match levo with
+               | [] -> ([stroj.prazna], sim', desno)
+               | glava :: rep -> (rep, sim', glava :: desno))
+          | R ->
+              (match desno with
+               | [] -> (sim' :: levo, stroj.prazna, [])
+               | glava :: rep -> (sim' :: levo, glava, rep)) 
+let trak_to_string trak =
+  let (levi, trenutni, desni) = trak in
+  let levi_string = String.concat "" (List.map (String.make 1) (List.rev levi)) in
+  let desni_string = String.concat "" (List.map (String.make 1) desni) in
+  levi_string ^ String.make 1 trenutni ^ desni_string
 
-let dodaj_sprejemno_stanje stanje avtomat =
-  {
-    avtomat with
-    stanja = stanje :: avtomat.stanja;
-    sprejemna_stanja = stanje :: avtomat.sprejemna_stanja;
-  }
+let rec zazeni_in_izpisi stroj trak stanje preveri =
+  if List.mem stanje stroj.koncna_stanja then
+    trak
+  else if List.mem (stanje, trak) preveri then 
+    failwith (Printf.printf "Turingov stroj se je zataknil v neskončni zanki. Stanje: %d, Trak: %s\n" stanje (trak_to_string trak);
+              failwith "Končano")
+  else
+    let novi_trak = izvedi_pravilo stroj trak stanje in
+    zazeni_in_izpisi stroj novi_trak (match novi_trak with (_, _, _) -> stanje) ((stanje,trak) :: preveri)
 
-let dodaj_prehod stanje1 znak stanje2 avtomat =
-  { avtomat with prehodi = (stanje1, znak, stanje2) :: avtomat.prehodi }
+let simuliraj_z_izpisom stroj vnos =
+  let zacetni_trak = ([], stroj.prazna, List.of_seq (String.to_seq vnos)) in
+  let koncni_trak = zazeni_in_izpisi stroj zacetni_trak stroj.zacetno_stanje [] in
+  let (levi, trenutni, desni) = koncni_trak in
+  let trak_niz = String.concat "" (List.map (String.make 1) (List.rev levi)) ^ String.make 1 trenutni ^ String.concat "" (List.map (String.make 1) desni) in
+  trak_niz
 
-let prehodna_funkcija avtomat stanje znak =
-  match
-    List.find_opt
-      (fun (stanje1, znak', _stanje2) -> stanje1 = stanje && znak = znak')
-      avtomat.prehodi
-  with
-  | None -> None
-  | Some (_, _, stanje2) -> Some stanje2
+let pravila = [
+  (0, '1', '1', 0, R);
+  (0, ' ', ' ', 1, R);
+  (1, '1', ' ', 1, R);
+  (1, ' ', ' ', 2, L);
+  (2, '1', '1', 2, L);
+  (2, ' ', '1', 0, R);
+]
 
-let zacetno_stanje avtomat = avtomat.zacetno_stanje
-let seznam_stanj avtomat = avtomat.stanja
-let seznam_prehodov avtomat = avtomat.prehodi
+let tm = {
+  pravila = pravila;
+  zacetno_stanje = 0;
+  prazna = ' ';
+  koncna_stanja = [2];
+}
 
-let je_sprejemno_stanje avtomat stanje =
-  List.mem stanje avtomat.sprejemna_stanja
-
-let enke_1mod3 =
-  let q0 = Stanje.iz_niza "q0"
-  and q1 = Stanje.iz_niza "q1"
-  and q2 = Stanje.iz_niza "q2" in
-  prazen_avtomat q0 |> dodaj_sprejemno_stanje q1
-  |> dodaj_nesprejemno_stanje q2
-  |> dodaj_prehod q0 '0' q0 |> dodaj_prehod q1 '0' q1 |> dodaj_prehod q2 '0' q2
-  |> dodaj_prehod q0 '1' q1 |> dodaj_prehod q1 '1' q2 |> dodaj_prehod q2 '1' q0
-
-let preberi_niz avtomat q niz =
-  let aux acc znak =
-    match acc with None -> None | Some q -> prehodna_funkcija avtomat q znak
-  in
-  niz |> String.to_seq |> Seq.fold_left aux (Some q)
+let rezultat = simuliraj_z_izpisom tm "111"
