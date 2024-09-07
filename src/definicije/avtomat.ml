@@ -1,79 +1,67 @@
-type stanje = int
-type simbol = char
-type premik = L | R
+type stanje = 
+  | Zacetno 
+  | Prehodno 
+  | Stevilsko 
+  | Napaka
 
-type pravilo = stanje * simbol * simbol * stanje * premik
+(* Funkcija za prehod med stanji glede na trenutni znak *)
+let prehod trenutno_stanje znak = 
+  match trenutno_stanje, znak with
+  | Zacetno, ('+' | '-') -> Prehodno  (* Sprejmemo opcijski + ali - znak *)
+  | Zacetno, '0'..'9' -> Stevilsko    (* ce ni predznaka, lahko takoj zacne s Stevilkami *)
+  | Prehodno, '0'..'9' -> Stevilsko   (* Po predznaku mora slediti Stevilka *)
+  | Stevilsko, '0'..'9' -> Stevilsko  (* ce smo Ze v Stevilcnem stanju, ostanemo v njem *)
+  | _ -> Napaka                       (* ce pride kaj drugega, gremo v napako *)
 
-type trak = simbol list * simbol * simbol list
+(* Glavna funkcija, ki preveri, ali je dani niz veljavno Stevilo *)
+let preveri_stevilo niz =
+  let dolzina = String.length niz in
+  let rec aux i stanje =
+    if i >= dolzina then stanje = Stevilsko (* Sprejmemo le, ce je zadnje stanje Stevilsko *)
+    else 
+      let znak = String.get niz i in
+      let novo_stanje = prehod stanje znak in
+      aux (i + 1) novo_stanje
+  in
+  aux 0 Zacetno
 
-type turingov_stroj = {
-  pravila : pravilo list;
-  zacetno_stanje : stanje;
-  prazna : simbol;
-  koncna_stanja : stanje list;
-}
 
-let rec najdi_pravilo pravila stanje simbol =
-  match pravila with
-  | [] -> None
-  | (s, sim, sim', s', premik) :: ostalo ->
-      if s = stanje && sim = simbol then
-        Some (sim', s', premik)
+
+let preveri_celostevilske_sekvence niz =
+  let dolzina = String.length niz in
+  let rec aux i je_celostevilska_sekvenca decimalno_stevilo =
+    if i >= dolzina then je_celostevilska_sekvenca
+    else
+      let znak = String.get niz i in
+      if znak >= '0' && znak <= '9' then
+        aux (i + 1) true decimalno_stevilo
+      else if znak = '.' && not decimalno_stevilo then
+        (* Ce najdemo prvo piko, dovolimo le, ce so za njo samo nicle *)
+        let rec preveri_nicle j =
+          if j >= dolzina then true
+          else
+            let znak_za_piko = String.get niz j in
+            if znak_za_piko = '0' then preveri_nicle (j + 1)
+            else false
+        in
+        if preveri_nicle (i + 1) then aux (i + 1) true true
+        else false
+      else if je_celostevilska_sekvenca then
+        aux (i + 1) false decimalno_stevilo
       else
-        najdi_pravilo ostalo stanje simbol
+        aux (i + 1) je_celostevilska_sekvenca decimalno_stevilo
+  in
+  aux 0 false false
 
-let rec izvedi_pravilo stroj trak stanje =
-  match trak with
-  | (levo, sim, desno) ->
-      match najdi_pravilo stroj.pravila stanje sim with
-      | None -> (levo, sim, desno)
-      | Some (sim', stanje', premik) ->
-          match premik with
-          | L ->
-              (match levo with
-               | [] -> ([stroj.prazna], sim', desno)
-               | glava :: rep -> (rep, sim', glava :: desno))
-          | R ->
-              (match desno with
-               | [] -> (sim' :: levo, stroj.prazna, [])
-               | glava :: rep -> (sim' :: levo, glava, rep)) 
-let trak_to_string trak =
-  let (levi, trenutni, desni) = trak in
-  let levi_string = String.concat "" (List.map (String.make 1) (List.rev levi)) in
-  let desni_string = String.concat "" (List.map (String.make 1) desni) in
-  levi_string ^ String.make 1 trenutni ^ desni_string
 
-let rec zazeni_in_izpisi stroj trak stanje preveri =
-  if List.mem stanje stroj.koncna_stanja then
-    trak
-  else if List.mem (stanje, trak) preveri then 
-    failwith (Printf.printf "Turingov stroj se je zataknil v neskončni zanki. Stanje: %d, Trak: %s\n" stanje (trak_to_string trak);
-              failwith "Končano")
-  else
-    let novi_trak = izvedi_pravilo stroj trak stanje in
-    zazeni_in_izpisi stroj novi_trak (match novi_trak with (_, _, _) -> stanje) ((stanje,trak) :: preveri)
 
-let simuliraj_z_izpisom stroj vnos =
-  let zacetni_trak = ([], stroj.prazna, List.of_seq (String.to_seq vnos)) in
-  let koncni_trak = zazeni_in_izpisi stroj zacetni_trak stroj.zacetno_stanje [] in
-  let (levi, trenutni, desni) = koncni_trak in
-  let trak_niz = String.concat "" (List.map (String.make 1) (List.rev levi)) ^ String.make 1 trenutni ^ String.concat "" (List.map (String.make 1) desni) in
-  trak_niz
-
-let pravila = [
-  (0, '1', '1', 0, R);
-  (0, ' ', ' ', 1, R);
-  (1, '1', ' ', 1, R);
-  (1, ' ', ' ', 2, L);
-  (2, '1', '1', 2, L);
-  (2, ' ', '1', 0, R);
-]
-
-let tm = {
-  pravila = pravila;
-  zacetno_stanje = 0;
-  prazna = ' ';
-  koncna_stanja = [2];
-}
-
-let rezultat = simuliraj_z_izpisom tm "111"
+let spremeni_niz niz slovar =
+  let dolzina = String.length niz in
+  let buffer = Buffer.create dolzina in
+  for i = 0 to dolzina - 1 do
+    let znak = String.get niz i in
+    let stevka = Char.code znak - Char.code '0' in  (* Pretvori znak v celo stevilo *)
+    let nova_stevka = Hashtbl.find slovar stevka in  (* Poišče vrednost za stevko iz slovarja *)
+    Buffer.add_char buffer (Char.chr (nova_stevka + Char.code '0'))  (* Zamenja števko *)
+  done;
+  Buffer.contents buffer  (* Vrne nov spremenjen niz *)

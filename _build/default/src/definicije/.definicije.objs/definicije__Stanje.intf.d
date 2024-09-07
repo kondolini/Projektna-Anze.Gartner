@@ -1,1 +1,0 @@
-src/definicije/stanje.mli:
