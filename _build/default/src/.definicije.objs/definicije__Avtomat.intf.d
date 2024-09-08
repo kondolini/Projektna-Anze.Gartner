@@ -1,0 +1,1 @@
+src/avtomat.mli: Hashtbl
