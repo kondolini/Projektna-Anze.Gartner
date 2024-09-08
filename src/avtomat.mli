@@ -1,5 +1,3 @@
-(* avtomat.mli *)
-
 type stanje_vmesnika =
   | SeznamMoznosti
   | IzbiraNacinaVnosa
@@ -8,19 +6,18 @@ type stanje_vmesnika =
   | BranjeDrugegaStevila
   | RezultatSpremenjenegaNiza
 
-type model = {
-  trenutno_stanje : stanje_vmesnika;
-  prvo_stevilo : int option;
-  drugo_stevilo : int option;
-}
-
-type msg =
+  type msg =
   | VnesiObeStevili of int * int
   | VnesiDrugoStevilo of int
   | ZamenjajVmesnik of stanje_vmesnika
   | IzberiNacinVnosa of string
   | IzberiNacinVnosaDrugo of string
-  | GenerirajInPrikaziNakljucnoStevilo
+
+type stanje = 
+  | Zacetno 
+  | Prehodno 
+  | Stevilsko 
+  | Napaka
 
 val spremeni_stevilo : string -> (int, int) Hashtbl.t -> string
 val primerjaj_stevili : string -> string -> unit
