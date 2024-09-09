@@ -12,6 +12,7 @@ type msg =
   | ZamenjajVmesnik of stanje_vmesnika
   | IzberiNacinVnosa of string
   | IzberiNacinVnosaDrugo of string
+  | GenerirajInPrikaziNakljucnoStevilo
 
 type stanje = 
   | Zacetno 

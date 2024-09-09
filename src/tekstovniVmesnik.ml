@@ -111,7 +111,7 @@ let rec izpisi_moznosti () =
   match read_line () with
   | "1" -> IzberiNacinVnosa "manual"
   | "2" -> IzberiNacinVnosa "print"
-  | "3" -> exit 0
+  | "3" -> print_endline "Nasvidenje, lepo se imejte in veliko se smejte :)!"; exit 0
   | _ -> 
       print_endline "Napacen vnos! Izberi 1, 2 ali 3.";
       izpisi_moznosti ()

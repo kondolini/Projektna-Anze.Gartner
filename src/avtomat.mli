@@ -6,12 +6,13 @@ type stanje_vmesnika =
   | BranjeDrugegaStevila
   | RezultatSpremenjenegaNiza
 
-  type msg =
+type msg =
   | VnesiObeStevili of int * int
   | VnesiDrugoStevilo of int
   | ZamenjajVmesnik of stanje_vmesnika
   | IzberiNacinVnosa of string
   | IzberiNacinVnosaDrugo of string
+  | GenerirajInPrikaziNakljucnoStevilo  (* Added constructor *)
 
 type stanje = 
   | Zacetno 
