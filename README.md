@@ -3,11 +3,11 @@
 Za projektno nalogo sem sestavil preprost avtomat več stanj. Uporabnik uporablja avtomat preko tekstovnega vmesnika (glej navodila uporabe). Avtomat ima tip model in premore 4 argumente: trenutno_stanje, prvo_stevilo, drugo_stevilo in trak.
 ## **Trenutno_stanje**
 trenutno_stanje ima tip stanje_vmesnika, ki je tip, definiran v datoteki avtomat.ml, SeznamMoznosti, IzbiraNacinaVnosa, BranjeObehStevil, RezultatSpremenjenegaNiza. Vsa ta stanja pomagajo pri spreminjanju stanj avtomata preko tekstovnega vmesnika.
-## **prvo_stevilo**
+## **Prvo_stevilo**
 Na začetku je nastavljeno na None in se posodobi, preko tekstovnega vmesnika.
-## **drugo_stevilo**
+## **Drugo_stevilo**
 Tudi ta je na začetku nastavljeno na None in se posodobi, preko tekstovnega vmesnika.
-## **trak**
+## **Trak**
 Trak je tipa int list in je na začetku nastavljen na []. Uporabnik ga preko tekstovnega vmesnika posodobi v poljuben int list, kjer števila v seznamu označujejo mesta, na katerih bo avtomat preverjal enakost števil.
 
 # **Navodila za uporabo**
@@ -48,16 +48,16 @@ Vnesi novo vrednost za stevko 9 (0-9): 9
 Prvo število: 12345, Drugo število: 678  
 Spremenjeno število: 67890, Drugo število: 678  
 Števili se ujemata na mestih podanih v traku: 1, 3  
-Postopek je zaključen.  
+Postopek je zaključen.    
 
 
-# **Kako deluje avtomat**
-Vse pomožne funkcije, ki niso neposredno povezane s tekstovnim vmesnikom so shranjene v datoteki avtomat.ml. Tam so definirane funkcije:
-1) spremeni_stevilo : string -> (int, int) Hashtbl.t -> string (Preko "slovarja"(v tem primeru Hastbl.t) spremeni število glede na vrednosti)
-2) primerjaj_stevili : string -> string -> string -> int list -> msg (Primerja števili na mestih, podanih v int listu)
-3) ustvari_slovar : unit -> (int, int) Hashtbl.t (Preko uporabniškega inputa sestavi "slovar", ki bo uporabljen v spremeni_stevilo) 
-4) obdelaj_niz : model -> msg (sprejme model (v sebi nosi trenutno_stajne, prvo_stevilo, drugo_stevilo in trak) ter vrne (primerjaj_stevili prvo_stevilo drugo_stevilo), če ni ostalih problemov)
-5) generiraj_nakljucno_stevilo : unit -> int (preko knjižnice random generira naključno naravno število do 100000000)
+# **Kako deluje avtomat**  
+Vse pomožne funkcije, ki niso neposredno povezane s tekstovnim vmesnikom so shranjene v datoteki avtomat.ml. Tam so definirane funkcije:  
+1) spremeni_stevilo : string -> (int, int) Hashtbl.t -> string (Preko "slovarja"(v tem primeru Hastbl.t) spremeni število glede na vrednosti)  
+2) primerjaj_stevili : string -> string -> string -> int list -> msg (Primerja števili na mestih, podanih v int listu)  
+3) ustvari_slovar : unit -> (int, int) Hashtbl.t (Preko uporabniškega inputa sestavi "slovar", ki bo uporabljen v spremeni_stevilo)   
+4) obdelaj_niz : model -> msg (sprejme model (v sebi nosi trenutno_stajne, prvo_stevilo, drugo_stevilo in trak) ter vrne (primerjaj_stevili prvo_stevilo drugo_stevilo), če ni ostalih problemov)  
+5) generiraj_nakljucno_stevilo : unit -> int (preko knjižnice random generira naključno naravno število do 100000000)  
 Klic vseh teh se izvede preko tekstovnega vmesnika. Type msg je definiran, da lahko avtomat pravilno preber in uporabi input uporabnika na določenih mestih, kjer se to od uporabnika zahteva.
 
 
