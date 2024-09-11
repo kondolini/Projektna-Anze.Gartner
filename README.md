@@ -25,29 +25,30 @@ Uporabnik naj odpre terminalo, ter naj se premakne v mapo src, preko ukaza "cd s
 # **Primer uporabe**
 Oglejmo si primer uporabe Avtomata. Imejmo števili 12345 in 678. Preverjajmo njuno enakost na 1. in 3. števki (če bi želeli v trak vstaviti število >3, bi naleteli na napako, saj ta ne obstaja v drugem številu). Prvemu številu spremenimo 1->6 2->7 3->8 4->9 5->0. Ostalo pa pustimo pri miru. Spremenjeno prvo število bo tedaj 67890, drugo število pa 678. Števili se ujemata na 1. in 3. števki (mesta v traku) in nam zato trak vrne: Števili se ujemata na mestih podanih v traku: 1, 3
 
-V terminali, bi to zgledalo kot:
-Dobrodošli v avtomatu!
-Izberi možnost:
-1) Spremeni in preveri števili
-2) Generiraj naključno število
-3) Izhod
-> 1
-Vnesi obe števili, ločeni z vejico (prvo, drugo): 12345, 678 \\
-Vnesi mesta za preverjanje na traku, ločena z vejico: 1,3\\
-Vnesi novo vrednost za stevko 0 (0-9): 0\\
-Vnesi novo vrednost za stevko 1 (0-9): 6\\
-Vnesi novo vrednost za stevko 2 (0-9): 7\\
-Vnesi novo vrednost za stevko 3 (0-9): 8\\
-Vnesi novo vrednost za stevko 4 (0-9): 9\\
-Vnesi novo vrednost za stevko 5 (0-9): 0\\
-Vnesi novo vrednost za stevko 6 (0-9): 6\\
-Vnesi novo vrednost za stevko 7 (0-9): 7\\
-Vnesi novo vrednost za stevko 8 (0-9): 8\\
-Vnesi novo vrednost za stevko 9 (0-9): 9\\
-Prvo število: 12345, Drugo število: 678\\
-Spremenjeno število: 67890, Drugo število: 678\\
-Števili se ujemata na mestih podanih v traku: 1, 3\\
-Postopek je zaključen.\\
+V terminali, bi to zgledalo kot:  
+  
+Dobrodošli v avtomatu!  
+Izberi možnost:  
+1) Spremeni in preveri števili  
+2) Generiraj naključno število  
+3) Izhod  
+> 1    
+Vnesi obe števili, ločeni z vejico (prvo, drugo): 12345, 678  
+Vnesi mesta za preverjanje na traku, ločena z vejico: 1,3  
+Vnesi novo vrednost za stevko 0 (0-9): 0    
+Vnesi novo vrednost za stevko 1 (0-9): 6  
+Vnesi novo vrednost za stevko 2 (0-9): 7  
+Vnesi novo vrednost za stevko 3 (0-9): 8  
+Vnesi novo vrednost za stevko 4 (0-9): 9  
+Vnesi novo vrednost za stevko 5 (0-9): 0  
+Vnesi novo vrednost za stevko 6 (0-9): 6  
+Vnesi novo vrednost za stevko 7 (0-9): 7  
+Vnesi novo vrednost za stevko 8 (0-9): 8   
+Vnesi novo vrednost za stevko 9 (0-9): 9  
+Prvo število: 12345, Drugo število: 678  
+Spremenjeno število: 67890, Drugo število: 678  
+Števili se ujemata na mestih podanih v traku: 1, 3  
+Postopek je zaključen.  
 
 
 # **Kako deluje avtomat**
