@@ -28,12 +28,11 @@ let rec beri_niz model =
       match input with 
       | "" -> 
           print_endline "Napaka! Ponovi vajo!"; 
-          ZamenjajVmesnik BranjeObehStevil  (* Return a valid message to retry *)
+          ZamenjajVmesnik BranjeObehStevil 
       | _ -> 
           let stevilke = String.split_on_char ',' input in
           (match stevilke with
           | [prvo; drugo] ->
-              (* Try to convert both inputs to integers *)
               let prvo_stevilo = 
                 try Some (int_of_string (String.trim prvo)) 
                 with Failure _ -> print_endline "Napaka pri pretvorbi prvega števila!"; None
@@ -42,7 +41,6 @@ let rec beri_niz model =
                 try Some (int_of_string (String.trim drugo)) 
                 with Failure _ -> print_endline "Napaka pri pretvorbi drugega števila!"; None
               in
-              (* If both conversions succeeded, proceed, else retry *)
               (match prvo_stevilo, drugo_stevilo with
               | Some prvo, Some drugo ->
                   print_string "Vnesi mesta za preverjanje na traku, ločena z vejico: ";
@@ -52,15 +50,15 @@ let rec beri_niz model =
                     VnesiObeStevili (prvo, drugo, trak)
                   else (
                     print_endline "Napaka! Nekatera mesta na traku so izven dolžine števil.";
-                    ZamenjajVmesnik BranjeObehStevil  (* Retry if track is invalid *)
+                    ZamenjajVmesnik BranjeObehStevil 
                   )
               | _ -> 
                   print_endline "Napaka! Eni ali obe števili nista pravilno vneseni.";
-                  ZamenjajVmesnik BranjeObehStevil  (* Retry if number conversion failed *)
+                  ZamenjajVmesnik BranjeObehStevil 
               )
           | _ -> 
               print_endline "Napaka! Vnesi dve števili ločeni z vejico.";
-              ZamenjajVmesnik BranjeObehStevil)  (* Retry if the input doesn't match the expected format *)
+              ZamenjajVmesnik BranjeObehStevil)
 
 
 
@@ -78,14 +76,14 @@ let update model = function
     ZamenjajVmesnik SeznamMoznosti
 | IzberiNacinVnosa "" -> 
     print_endline "Napaka: Prazno ime načina vnosa.";
-    ZamenjajVmesnik SeznamMoznosti  (* Handle empty input case *)
+    ZamenjajVmesnik SeznamMoznosti  
 | GenerirajInPrikaziNakljucnoStevilo ->
     let nakljucno_stevilo = generiraj_nakljucno_stevilo () in
     print_endline ("Naključno število: " ^ string_of_int nakljucno_stevilo);
     ZamenjajVmesnik SeznamMoznosti
 | None -> None
 | _ -> 
-    print_endline "Neznano sporočilo!";  (* Handle any other unmatched cases *)
+    print_endline "Neznano sporočilo!";
     ZamenjajVmesnik SeznamMoznosti
 
   
