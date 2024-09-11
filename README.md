@@ -64,5 +64,13 @@ Klic vseh teh se izvede preko tekstovnega vmesnika. Type msg je definiran, da la
 # **Viri**
 Osnovno izhodišče avtomata je bil nekakšen Turingov stroj:
 https://en.wikipedia.org/wiki/Turing_machine
-Turingov stroj je lahko tudi neskončne, podobnost je v tem, da je Turingovemu stroju dan trak in ukazi, kako naj se premika po njem. Med ukazi je tudi Halt funkcija, ki avtomatu pove, naj preide v končno/sprejemno stanje.
+Turingov stroj je lahko tudi neskončne, podobnost je v tem, da je Turingovemu stroju dan trak in ukazi, kako naj se premika po njem. Med ukazi je tudi Halt funkcija, ki avtomatu pove, naj preide v končno/sprejemno stanje. Tehnično, pa je avtomat najbolj podoben Mooreovem avtomatu, po formalni definicij iz https://en.wikipedia.org/wiki/Moore_machine lahko opišemo naša stanja kot:
+1) Množica stanj 𝑆: {SeznamMoznosti, IzbiraNacinaVnosa, BranjeObehStevil, RezultatSpremenjenegaNiza}
+2) Začetno stanje: {SeznamMoznosti}
+3) Abeceda : {tip msg}
+4) Množica izhodov 𝑂: {VnesiObeStevili, ZamenjajVmesnik, IzberiNacinVnosa, GenerirajInPrikaziNakljucnoStevilo, None}
+5) Prehodna funkcija: funkcija update
+6) Funkcija izhoda: funkcija view
+
+
 
