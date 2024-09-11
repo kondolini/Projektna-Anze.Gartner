@@ -61,6 +61,8 @@ Vse pomožne funkcije, ki niso neposredno povezane s tekstovnim vmesnikom so shr
 Klic vseh teh se izvede preko tekstovnega vmesnika. Type msg je definiran, da lahko avtomat pravilno preber in uporabi input uporabnika na določenih mestih, kjer se to od uporabnika zahteva.
 
 
-
-
+# **Viri**
+Osnovno izhodišče avtomata je bil nekakšen Turingov stroj:
+https://en.wikipedia.org/wiki/Turing_machine
+Turingov stroj je lahko tudi neskončne, podobnost je v tem, da je Turingovemu stroju dan trak in ukazi, kako naj se premika po njem. Med ukazi je tudi Halt funkcija, ki avtomatu pove, naj preide v končno/sprejemno stanje.
 
