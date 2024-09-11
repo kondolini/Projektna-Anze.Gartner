@@ -3,7 +3,6 @@ open Random
 type stanje_vmesnika =
   | SeznamMoznosti
   | IzbiraNacinaVnosa
-  | IzbiraNacinaVnosaDrugo
   | BranjeObehStevil
   | RezultatSpremenjenegaNiza
 
@@ -12,7 +11,6 @@ type msg =
   | VnesiDrugoStevilo of int * int list
   | ZamenjajVmesnik of stanje_vmesnika
   | IzberiNacinVnosa of string
-  | IzberiNacinVnosaDrugo of string
   | GenerirajInPrikaziNakljucnoStevilo
   | None
 
