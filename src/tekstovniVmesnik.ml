@@ -2,55 +2,6 @@ open Printf
 open Random
 open Avtomat
 
-type stanje_vmesnika =
-  | SeznamMoznosti
-  | IzbiraNacinaVnosa
-  | IzbiraNacinaVnosaDrugo
-  | BranjeObehStevil
-  | BranjeDrugegaStevila
-  | RezultatSpremenjenegaNiza
-
-type model = {
-  trenutno_stanje : stanje_vmesnika;
-  prvo_stevilo : int option;
-  drugo_stevilo : int option;
-}
-
-type msg =
-  | VnesiObeStevili of int * int
-  | VnesiDrugoStevilo of int
-  | ZamenjajVmesnik of stanje_vmesnika
-  | IzberiNacinVnosa of string
-  | IzberiNacinVnosaDrugo of string
-  | GenerirajInPrikaziNakljucnoStevilo
-
-
-let ustvari_slovar () =
-  let slovar = Hashtbl.create 10 in
-  for i = 0 to 9 do
-    let vrednost = 
-      let rec get_valid_digit () =
-        Printf.printf "Vnesi novo vrednost za stevko %d (0-9): " i;
-        let input = read_line () in
-        if String.length input = 1 && input.[0] >= '0' && input.[0] <= '9' then
-          int_of_string input
-        else (
-          Printf.printf "Napaka: '%s' ni veljavna števka. Poskusi znova.\n" input;
-          get_valid_digit ()
-        )
-      in
-      get_valid_digit ()
-    in
-    Hashtbl.add slovar i vrednost
-  done;
-  slovar
-
-let obdelaj_niz prvo_stevilo drugo_stevilo =
-  let slovar = ustvari_slovar () in
-  Printf.printf "Prvo število: %d, Drugo število: %d\n" prvo_stevilo drugo_stevilo;
-  let spremenjeno_stevilo = spremeni_stevilo (string_of_int prvo_stevilo) slovar in
-  Avtomat.primerjaj_stevili spremenjeno_stevilo (string_of_int drugo_stevilo);
-  ZamenjajVmesnik RezultatSpremenjenegaNiza
 
 let generiraj_nakljucno_stevilo () =
   Random.int 100000000
@@ -101,6 +52,7 @@ let update model = function
 
   | ZamenjajVmesnik stanje ->
       ZamenjajVmesnik stanje
+  | _ -> None
 
 let rec izpisi_moznosti () =
   print_endline "Izberi možnost:";
@@ -137,6 +89,7 @@ let view model =
   | RezultatSpremenjenegaNiza -> 
       print_endline "Postopek je zaključen."; 
       ZamenjajVmesnik SeznamMoznosti
+  |_ -> None
 
 let rec loop model =
   let msg = view model in

@@ -1,3 +1,5 @@
+open Random
+
 type stanje_vmesnika =
   | SeznamMoznosti
   | IzbiraNacinaVnosa
@@ -13,12 +15,13 @@ type msg =
   | IzberiNacinVnosa of string
   | IzberiNacinVnosaDrugo of string
   | GenerirajInPrikaziNakljucnoStevilo
+  | None
 
-type stanje = 
-  | Zacetno 
-  | Prehodno 
-  | Stevilsko 
-  | Napaka
+type model = {
+  trenutno_stanje : stanje_vmesnika;
+  prvo_stevilo : int option;
+  drugo_stevilo : int option;
+}
 
 let spremeni_stevilo niz slovar =
   let dolzina = String.length niz in
@@ -57,12 +60,13 @@ let ustvari_slovar () =
   done;
   slovar
 
+let generiraj_nakljucno_stevilo () =
+  Random.int 100000000
+
+
 let obdelaj_niz prvo_stevilo drugo_stevilo =
   let slovar = ustvari_slovar () in
   Printf.printf "Prvo število: %d, Drugo število: %d\n" prvo_stevilo drugo_stevilo;
   let spremenjeno_stevilo = spremeni_stevilo (string_of_int prvo_stevilo) slovar in
   primerjaj_stevili spremenjeno_stevilo (string_of_int drugo_stevilo);
-  ZamenjajVmesnik RezultatSpremenjenegaNiza
 
-let generiraj_nakljucno_stevilo () =
-  Random.int 100000000
