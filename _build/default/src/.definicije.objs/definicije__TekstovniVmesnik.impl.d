@@ -1,1 +1,1 @@
-src/tekstovniVmesnik.ml: Avtomat Buffer Char Hashtbl Printf Random String
+src/tekstovniVmesnik.ml: Avtomat Printf Random String

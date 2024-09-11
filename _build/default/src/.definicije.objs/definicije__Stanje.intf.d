@@ -1,1 +1,0 @@
-src/stanje.mli:

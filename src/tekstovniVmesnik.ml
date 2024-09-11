@@ -26,7 +26,7 @@ let rec beri_niz model =
       VnesiDrugoStevilo drugo_stevilo
   | _ -> failwith "Neveljavno stanje"
 
-let update model = function
+  let update model = function
   | IzberiNacinVnosa "manual" -> 
       ZamenjajVmesnik BranjeObehStevil
   
@@ -41,18 +41,23 @@ let update model = function
       ZamenjajVmesnik SeznamMoznosti
 
   | VnesiObeStevili (prvo, drugo) -> 
-      obdelaj_niz prvo drugo
+      obdelaj_niz prvo drugo;
+      ZamenjajVmesnik RezultatSpremenjenegaNiza
 
   | VnesiDrugoStevilo drugo_stevilo -> 
       (match model.prvo_stevilo with
-      | Some prvo_stevilo -> obdelaj_niz prvo_stevilo drugo_stevilo
+      | Some prvo_stevilo -> 
+          obdelaj_niz prvo_stevilo drugo_stevilo;
+          ZamenjajVmesnik RezultatSpremenjenegaNiza
       | None ->
           print_endline "Napaka! Najprej vnesi prvo število.";
           ZamenjajVmesnik SeznamMoznosti)
 
   | ZamenjajVmesnik stanje ->
       ZamenjajVmesnik stanje
+
   | _ -> None
+
 
 let rec izpisi_moznosti () =
   print_endline "Izberi možnost:";

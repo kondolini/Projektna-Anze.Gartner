@@ -3,7 +3,7 @@
 # Shared cache: disabled
 # Workspace root: /home/opam/Projektna-Anze.Gartner-1
 # Auto-detected concurrency: 4
-$ /home/opam/.opam/4.14/bin/ocamlc.opt -config > /tmp/dune_23fe0e_output
+$ /home/opam/.opam/4.14/bin/ocamlc.opt -config > /tmp/dune_a37e4f_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -21,8 +21,6 @@ $ /home/opam/.opam/4.14/bin/ocamlc.opt -config > /tmp/dune_23fe0e_output
 #  ; installed_env =
 #      map
 #        { "INSIDE_DUNE" : "/home/opam/Projektna-Anze.Gartner-1/_build/default"
-#        ; "OCAML_COLOR" : "always"
-#        ; "OPAMCOLOR" : "always"
 #        }
 #  ; findlib_paths = [ External "/home/opam/.opam/4.14/lib" ]
 #  ; ocaml_config =
@@ -98,77 +96,28 @@ $ /home/opam/.opam/4.14/bin/ocamlc.opt -config > /tmp/dune_23fe0e_output
 #      }
 #  ; instrument_with = []
 #  }
-$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamldep.opt -modules -intf src/avtomat.mli) > _build/default/src/.definicije.objs/definicije__Avtomat.intf.d
+$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I src/.definicije.objs/byte -no-alias-deps -opaque -o src/.definicije.objs/byte/definicije.cmo -c -impl src/definicije.ml-gen)
 $ (cd _build/default && /home/opam/.opam/4.14/bin/ocamldep.opt -modules -impl src/tekstovniVmesnik.ml) > _build/default/src/.definicije.objs/definicije__TekstovniVmesnik.impl.d
+$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamldep.opt -modules -impl src/avtomat.ml) > _build/default/src/.definicije.objs/definicije__Avtomat.impl.d
+$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamldep.opt -modules -intf src/avtomat.mli) > _build/default/src/.definicije.objs/definicije__Avtomat.intf.d
 $ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.definicije.objs/byte -no-alias-deps -opaque -open Definicije -o src/.definicije.objs/byte/definicije__Avtomat.cmi -c -intf src/avtomat.mli)
-$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.definicije.objs/byte -no-alias-deps -opaque -open Definicije -o src/.definicije.objs/byte/definicije__ZagnaniAvtomat.cmi -c -intf src/zagnaniAvtomat.mli)
-> File "src/zagnaniAvtomat.mli", line 4, characters 19-28:
-> 4 | val avtomat : t -> Avtomat.t
->                        ^^^^^^^^^
-> Error: Unbound type constructor Avtomat.t
+$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.definicije.objs/byte -no-alias-deps -opaque -open Definicije -o src/.definicije.objs/byte/definicije__TekstovniVmesnik.cmo -c -impl src/tekstovniVmesnik.ml)
+> File "src/tekstovniVmesnik.ml", line 44, characters 6-28:
+> 44 |       obdelaj_niz prvo drugo
+>            ^^^^^^^^^^^^^^^^^^^^^^
+> Error: This expression has type unit but an expression was expected of type
+>          msg
 [2]
 $ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.definicije.objs/byte -intf-suffix .ml -no-alias-deps -opaque -open Definicije -o src/.definicije.objs/byte/definicije__Avtomat.cmo -c -impl src/avtomat.ml)
-> File "src/avtomat.ml", line 1:
-> Error: The implementation src/avtomat.ml
->        does not match the interface src/.definicije.objs/byte/definicije__Avtomat.cmi:
->         The value `preveri_stevili' is required but not provided
->        File "src/avtomat.mli", line 8, characters 0-70: Expected declaration
-[2]
-$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I src/.definicije.objs/byte -I src/.definicije.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Definicije -o src/.definicije.objs/native/definicije__Avtomat.cmx -c -impl src/avtomat.ml)
-> File "src/avtomat.ml", line 1:
-> Error: The implementation src/avtomat.ml
->        does not match the interface src/.definicije.objs/byte/definicije__Avtomat.cmi:
->         The value `preveri_stevili' is required but not provided
->        File "src/avtomat.mli", line 8, characters 0-70: Expected declaration
-[2]
-$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.definicije.objs/byte -no-alias-deps -opaque -open Definicije -o src/.definicije.objs/byte/definicije__TekstovniVmesnik.cmo -c -impl src/tekstovniVmesnik.ml)
-> File "src/tekstovniVmesnik.ml", line 74, characters 8-16:
-> 74 | let rec beri_niz model =
->              ^^^^^^^^
-> Error (warning 39 [unused-rec-flag]): unused rec flag.
-> File "src/tekstovniVmesnik.ml", lines 92-125, characters 19-28:
->  92 | ...................function
->  93 |   | IzberiNacinVnosa "manual" -> 
->  94 |       ZamenjajVmesnik (BranjeNiza 1)
->  95 |   
->  96 |   | IzberiNacinVnosa "random" ->
-> ...
-> 122 |   )
-> 123 | 
-> 124 |   | ZamenjajVmesnik stanje ->
-> 125 |       ZamenjajVmesnik stanje
-> Error (warning 8 [partial-match]): this pattern-matching is not exhaustive.
-> Here is an example of a case that is not matched:
-> IzberiNacinVnosa ""
-> File "src/tekstovniVmesnik.ml", lines 164-170, characters 2-63:
-> 164 | ..match model.trenutno_stanje with
-> 165 |   | SeznamMoznosti -> izpisi_moznosti ()
-> 166 |   | IzbiraNacinaVnosa -> izberi_nacin_vnosa ()
-> 167 |   | IzbiraNacinaVnosaDrugo -> izberi_nacin_vnosa_drugo ()
-> 168 |   | BranjeNiza 1 -> beri_niz model
-> 169 |   | BranjeNiza 2 -> beri_niz model
-> 170 |   | RezultatSpremenjenegaNiza -> ZamenjajVmesnik SeznamMoznosti
-> Error (warning 8 [partial-match]): this pattern-matching is not exhaustive.
-> Here is an example of a case that is not matched:
-> BranjeNiza 0
-> File "src/tekstovniVmesnik.ml", line 1, characters 0-11:
-> 1 | open Printf
->     ^^^^^^^^^^^
-> Error (warning 33 [unused-open]): unused open Stdlib.Printf.
-> File "src/tekstovniVmesnik.ml", line 2, characters 0-12:
-> 2 | open Avtomat
->     ^^^^^^^^^^^^
-> Error (warning 33 [unused-open]): unused open Definicije.Avtomat.
-> File "src/tekstovniVmesnik.ml", line 3, characters 0-11:
-> 3 | open Random
+> File "src/avtomat.ml", line 1, characters 0-11:
+> 1 | open Random
 >     ^^^^^^^^^^^
 > Error (warning 33 [unused-open]): unused open Stdlib.Random.
-> File "src/tekstovniVmesnik.ml", line 78, characters 10-22:
-> 78 |       let prvo_stevilo = int_of_string (read_line ()) in
->                ^^^^^^^^^^^^
-> Error (warning 26 [unused-var]): unused variable prvo_stevilo.
-> File "src/tekstovniVmesnik.ml", line 99, characters 10-16:
-> 99 |       let model' = { model with prvo_stevilo = Some random_number } in
->                ^^^^^^
-> Error (warning 26 [unused-var]): unused variable model'.
+[2]
+$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -I src/.definicije.objs/byte -I src/.definicije.objs/native -intf-suffix .ml-gen -no-alias-deps -opaque -o src/.definicije.objs/native/definicije.cmx -c -impl src/definicije.ml-gen)
+$ (cd _build/default && /home/opam/.opam/4.14/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I src/.definicije.objs/byte -I src/.definicije.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Definicije -o src/.definicije.objs/native/definicije__Avtomat.cmx -c -impl src/avtomat.ml)
+> File "src/avtomat.ml", line 1, characters 0-11:
+> 1 | open Random
+>     ^^^^^^^^^^^
+> Error (warning 33 [unused-open]): unused open Stdlib.Random.
 [2]
