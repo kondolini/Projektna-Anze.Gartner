@@ -8,7 +8,6 @@ type stanje_vmesnika =
 
 type msg =
   | VnesiObeStevili of int * int * int list
-  | VnesiDrugoStevilo of int * int list
   | ZamenjajVmesnik of stanje_vmesnika
   | IzberiNacinVnosa of string
   | GenerirajInPrikaziNakljucnoStevilo
