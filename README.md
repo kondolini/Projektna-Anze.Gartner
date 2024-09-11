@@ -1,11 +1,11 @@
 # Projektna-Anze.Gartner
-# **Končen avtomat več stanj. **
+# Končen avtomat več stanj
 Za projektno nalogo sem sestavil preprost avtomat več stanj. Uporabnik uporablja avtomat preko tekstovnega vmesnika (glej navodila uporabe). Avtomat ima tip model in premore 4 argumente: trenutno_stanje, prvo_stevilo, drugo_stevilo in trak.
 ## **Trenutno_stanje**
 trenutno_stanje ima tip stanje_vmesnika, ki je tip, definiran v datoteki avtomat.ml, SeznamMoznosti, IzbiraNacinaVnosa, BranjeObehStevil, RezultatSpremenjenegaNiza. Vsa ta stanja pomagajo pri spreminjanju stanj avtomata preko tekstovnega vmesnika.
 ## **prvo_stevilo**
 Na začetku je nastavljeno na None in se posodobi, preko tekstovnega vmesnika.
-## ** drugo_stevilo**
+## **drugo_stevilo**
 Tudi ta je na začetku nastavljeno na None in se posodobi, preko tekstovnega vmesnika.
 ## **trak**
 Trak je tipa int list in je na začetku nastavljen na []. Uporabnik ga preko tekstovnega vmesnika posodobi v poljuben int list, kjer števila v seznamu označujejo mesta, na katerih bo avtomat preverjal enakost števil.
@@ -31,31 +31,23 @@ Izberi možnost:
 1) Spremeni in preveri števili
 2) Generiraj naključno število
 3) Izhod
-> 3
-Nasvidenje, lepo se imejte in veliko se smejte :)!
-root@docker-desktop:~/Projektna-Anze.Gartner-1/src# ./tekstovni_vmesnik
-Dobrodošli v avtomatu!
-Izberi možnost:
-1) Spremeni in preveri števili
-2) Generiraj naključno število
-3) Izhod
 > 1
-Vnesi obe števili, ločeni z vejico (prvo, drugo): 12345, 678
-Vnesi mesta za preverjanje na traku, ločena z vejico: 1,3
-Vnesi novo vrednost za stevko 0 (0-9): 0
-Vnesi novo vrednost za stevko 1 (0-9): 6
-Vnesi novo vrednost za stevko 2 (0-9): 7
-Vnesi novo vrednost za stevko 3 (0-9): 8
-Vnesi novo vrednost za stevko 4 (0-9): 9
-Vnesi novo vrednost za stevko 5 (0-9): 0
-Vnesi novo vrednost za stevko 6 (0-9): 6
-Vnesi novo vrednost za stevko 7 (0-9): 7
-Vnesi novo vrednost za stevko 8 (0-9): 8
-Vnesi novo vrednost za stevko 9 (0-9): 9
-Prvo število: 12345, Drugo število: 678
-Spremenjeno število: 67890, Drugo število: 678
-Števili se ujemata na mestih podanih v traku: 1, 3
-Postopek je zaključen.
+Vnesi obe števili, ločeni z vejico (prvo, drugo): 12345, 678 \\
+Vnesi mesta za preverjanje na traku, ločena z vejico: 1,3\\
+Vnesi novo vrednost za stevko 0 (0-9): 0\\
+Vnesi novo vrednost za stevko 1 (0-9): 6\\
+Vnesi novo vrednost za stevko 2 (0-9): 7\\
+Vnesi novo vrednost za stevko 3 (0-9): 8\\
+Vnesi novo vrednost za stevko 4 (0-9): 9\\
+Vnesi novo vrednost za stevko 5 (0-9): 0\\
+Vnesi novo vrednost za stevko 6 (0-9): 6\\
+Vnesi novo vrednost za stevko 7 (0-9): 7\\
+Vnesi novo vrednost za stevko 8 (0-9): 8\\
+Vnesi novo vrednost za stevko 9 (0-9): 9\\
+Prvo število: 12345, Drugo število: 678\\
+Spremenjeno število: 67890, Drugo število: 678\\
+Števili se ujemata na mestih podanih v traku: 1, 3\\
+Postopek je zaključen.\\
 
 
 # **Kako deluje avtomat**
