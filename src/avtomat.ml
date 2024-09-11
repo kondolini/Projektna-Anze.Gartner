@@ -5,23 +5,25 @@ type stanje_vmesnika =
   | IzbiraNacinaVnosa
   | IzbiraNacinaVnosaDrugo
   | BranjeObehStevil
-  | BranjeDrugegaStevila
   | RezultatSpremenjenegaNiza
 
 type msg =
-  | VnesiObeStevili of int * int
-  | VnesiDrugoStevilo of int
+  | VnesiObeStevili of int * int * int list
+  | VnesiDrugoStevilo of int * int list
   | ZamenjajVmesnik of stanje_vmesnika
   | IzberiNacinVnosa of string
   | IzberiNacinVnosaDrugo of string
   | GenerirajInPrikaziNakljucnoStevilo
   | None
 
+
 type model = {
   trenutno_stanje : stanje_vmesnika;
   prvo_stevilo : int option;
   drugo_stevilo : int option;
-}
+  trak : int list;
+  }
+  
 
 let spremeni_stevilo niz slovar =
   let dolzina = String.length niz in
@@ -34,11 +36,38 @@ let spremeni_stevilo niz slovar =
   done;
   Buffer.contents buffer
 
-let primerjaj_stevili prvo drugo =
-  if prvo = drugo then
-    Printf.printf "Spremenjeno prvo število \"%s\" je enako drugemu številu \"%s\".\n" prvo drugo
+let primerjaj_stevili (prvo: string) (drugo: string) (spremenjeno_prvo: string) (trak: int list) : msg =
+  let rec check_positions positions =
+    match positions with
+    | [] -> true
+    | pos :: rest ->
+        if pos <= String.length spremenjeno_prvo && pos <= String.length drugo then
+          if String.get spremenjeno_prvo (pos - 1) = String.get drugo (pos - 1) then
+            check_positions rest
+          else
+            false
+        else (
+          print_endline ("Napaka: Števka na mestu " ^ string_of_int pos ^ " je izven dolžine števila.");
+          false
+        )
+  in
+  if check_positions trak then
+    begin
+      Printf.printf "Spremenjeno število: %s, Drugo število: %s\n" spremenjeno_prvo drugo;
+      Printf.printf "Števili se ujemata na mestih podanih v traku: %s\n" 
+        (String.concat ", " (List.map string_of_int trak));
+      ZamenjajVmesnik RezultatSpremenjenegaNiza
+    end
   else
-    Printf.printf "Spremenjeno prvo število \"%s\" NI enako drugemu številu \"%s\".\n" prvo drugo
+    begin
+      Printf.printf "Spremenjeno število: %s, Drugo število: %s\n" spremenjeno_prvo drugo;
+      Printf.printf "Števili se ne ujemata na mestih podanih v traku: %s\n" 
+        (String.concat ", " (List.map string_of_int trak));
+      ZamenjajVmesnik RezultatSpremenjenegaNiza
+    end
+
+
+
 
 let ustvari_slovar () =
   let slovar = Hashtbl.create 10 in
@@ -64,9 +93,16 @@ let generiraj_nakljucno_stevilo () =
   Random.int 100000000
 
 
-let obdelaj_niz prvo_stevilo drugo_stevilo =
-  let slovar = ustvari_slovar () in
-  Printf.printf "Prvo število: %d, Drugo število: %d\n" prvo_stevilo drugo_stevilo;
-  let spremenjeno_stevilo = spremeni_stevilo (string_of_int prvo_stevilo) slovar in
-  primerjaj_stevili spremenjeno_stevilo (string_of_int drugo_stevilo);
+let obdelaj_niz (model: model) : msg =
+  let prvo_stevilo = model.prvo_stevilo in
+  let drugo_stevilo = model.drugo_stevilo in
+  match prvo_stevilo, drugo_stevilo with
+  | Some prvo, Some drugo ->
+      let slovar = ustvari_slovar () in
+      Printf.printf "Prvo število: %d, Drugo število: %d\n" prvo drugo;
+      let spremenjeno_stevilo = spremeni_stevilo (string_of_int prvo) slovar in
+      primerjaj_stevili (string_of_int prvo) (string_of_int drugo) spremenjeno_stevilo model.trak
+  | _ ->
+      print_endline "Napaka! Eno ali obe števili nista bili pravilno vneseni.";
+      ZamenjajVmesnik SeznamMoznosti
 

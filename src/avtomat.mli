@@ -3,12 +3,12 @@ type stanje_vmesnika =
   | IzbiraNacinaVnosa
   | IzbiraNacinaVnosaDrugo
   | BranjeObehStevil
-  | BranjeDrugegaStevila
   | RezultatSpremenjenegaNiza
+
   
 type msg =
-  | VnesiObeStevili of int * int
-  | VnesiDrugoStevilo of int
+  | VnesiObeStevili of int * int * int list
+  | VnesiDrugoStevilo of int * int list
   | ZamenjajVmesnik of stanje_vmesnika
   | IzberiNacinVnosa of string
   | IzberiNacinVnosaDrugo of string
@@ -20,10 +20,12 @@ type model = {
   trenutno_stanje : stanje_vmesnika;
   prvo_stevilo : int option;
   drugo_stevilo : int option;
+  trak : int list; 
 }
 
+
 val spremeni_stevilo : string -> (int, int) Hashtbl.t -> string
-val primerjaj_stevili : string -> string -> unit
+val primerjaj_stevili : string -> string -> string -> int list -> msg
 val ustvari_slovar : unit -> (int, int) Hashtbl.t
-val obdelaj_niz : int -> int -> unit
+val obdelaj_niz : model -> msg
 val generiraj_nakljucno_stevilo : unit -> int
